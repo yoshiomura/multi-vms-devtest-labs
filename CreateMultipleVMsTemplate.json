@@ -1,0 +1,119 @@
+{
+
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "newVMName": {
+            "type": "string"
+        },
+        "labName": {
+            "type": "string"
+        },
+        "size": {
+            "type": "string"
+        },
+        "userName": {
+            "type": "string"
+        },
+        "password": {
+            "type": "securestring"
+        },
+        "vstsProjectUri": {
+            "type": "string"
+        },
+        "buildDefinitionName": {
+            "type": "string"
+        },
+        "personalAccessToken": {
+            "type": "securestring"
+        },
+        "pathToScript": {
+            "type": "string"
+        },
+        "scriptArguments": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "VMcounts": {
+            "type": "string",
+            "defaultValue": "1"
+        }
+    },
+    "resources": [
+        {
+            "apiVersion": "2018-10-15-preview",
+            "type": "Microsoft.DevTestLab/labs/virtualmachines",
+            "name": "[concat(variables('vmName'), padLeft(copyIndex(), 2, '0'))]",
+            "location": "[resourceGroup().location]",
+            "copy": {
+                "name": "[parameters('newVMName')]",
+                "count": "[int(parameters('VMcounts'))]"
+            },
+            "properties": {
+                "labVirtualNetworkId": "[variables('labVirtualNetworkId')]",
+                "notes": "Windows Server 2016 Datacenter",
+                "galleryImageReference": {
+                    "offer": "WindowsServer",
+                    "publisher": "MicrosoftWindowsServer",
+                    "sku": "2016-Datacenter",
+                    "osType": "Windows",
+                    "version": "latest"
+                },
+                "planId": "",
+                "size": "[parameters('size')]",
+                "userName": "[parameters('userName')]",
+                "password": "[parameters('password')]",
+                "isAuthenticationWithSshKey": false,
+                "artifacts": [
+                    {
+                        "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', parameters('labName'), 'public repo', 'windows-vsts-download-and-run-script')]",
+                        "parameters": [
+                            {
+                                "name": "vstsProjectUri",
+                                "value": "[parameters('vstsProjectUri')]"
+                            },
+                            {
+                                "name": "buildDefinitionName",
+                                "value": "[parameters('buildDefinitionName')]"
+                            },
+                            {
+                                "name": "personalAccessToken",
+                                "value": "[parameters('personalAccessToken')]"
+                            },
+                            {
+                                "name": "pathToScript",
+                                "value": "[parameters('pathToScript')]"
+                            },
+                            {
+                                "name": "scriptArguments",
+                                "value": "[parameters('scriptArguments')]"
+                            }
+                        ]
+                    }
+                ],
+                "labSubnetName": "[variables('labSubnetName')]",
+                "disallowPublicIpAddress": true,
+                "storageType": "",
+                "allowClaim": true,
+                "networkInterface": {
+                    "sharedPublicIpAddressConfiguration": {
+                        "inboundNatRules": [
+                            {
+                                "transportProtocol": "tcp",
+                                "backendPort": 3389
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    ],
+    "variables": {
+        "labSubnetName": "[concat(variables('labVirtualNetworkName'), 'Subnet')]",
+        "labVirtualNetworkId": "[resourceId('Microsoft.DevTestLab/labs/virtualnetworks', parameters('labName'), variables('labVirtualNetworkName'))]",
+        "labVirtualNetworkName": "[concat('Dtl', parameters('labName'))]",
+        "vmId": "[resourceId ('Microsoft.DevTestLab/labs/virtualmachines', parameters('labName'), parameters('newVMName'))]",
+        "vmName": "[concat(parameters('labName'), '/', parameters('newVMName'))]"
+    }
+
+}

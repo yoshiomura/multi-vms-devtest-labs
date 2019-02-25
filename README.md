@@ -15,6 +15,13 @@ The template DevTest Labs exported needs the task for deployment from DevOps.
 
 https://marketplace.visualstudio.com/items?itemName=ms-azuredevtestlabs.tasks
 
+
+## Usage 
+
+### Add "Create Azure DevTest Labs VM" in your task.
+
+Add the task in your release pipeline.
+
 ### Set Variables in Pipelines
 
 In this ARM Template, these variables are used.

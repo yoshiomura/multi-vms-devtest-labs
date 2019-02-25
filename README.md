@@ -21,11 +21,11 @@ In this ARM Template, these variables are used.
 
 - newVMName
 - userName
-- password
+- password (securestring)
 - buildDefinitionName (your Build Pipeline Name)
 - labName
 - pathToScript (Script Path you execute on VM)
-- personalAccessToken
+- personalAccessToken (securestring)
 - size (VM size)
 - VMcounts
 - vstsProjectUri (https://dev.azure.com/yourorg/yourproject)

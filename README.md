@@ -1,4 +1,4 @@
-# Deploy Multiple VMs on DevTest from Azure DevOps Pipelines
+# Deploy Application to DevTest Labs Multiple VMs from Azure DevOps Pipelines
 Template for DevTest Labs using DevOps artifacts for deploying apps to Multiple VMs in Labs.
 
 ## Prerequisites

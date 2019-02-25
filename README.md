@@ -11,7 +11,7 @@ https://docs.microsoft.com/en-us/azure/devops/organizations/accounts/use-persona
 
 ### Get Free DevTest Labs Task from Visual Studio Market Place
 
-The template DevTest Labs exports needs the task for deployment from DevOps.
+The template DevTest Labs exported needs the task for deployment from DevOps.
 
 https://marketplace.visualstudio.com/items?itemName=ms-azuredevtestlabs.tasks
 

@@ -37,7 +37,7 @@ In this ARM Template, these variables are used.
 - VMcounts
 - vstsProjectUri (https://dev.azure.com/yourorg/yourproject)
 
-## Set "Azure DevTest Labs Create VM" in your Pipeline.
+### Set "Azure DevTest Labs Create VM" in your Pipeline.
 
 Choose this template and set Template Parameters like below. It should be changed along with parameters in your template.
 
